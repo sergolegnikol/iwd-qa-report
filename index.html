@@ -48,9 +48,9 @@
 
       header {
         display: grid;
-        gap: 32px;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        align-items: center;
+        gap: 24px;
+        grid-template-columns: auto 1fr;
+        align-items: start;
         padding: 32px;
         background: white;
         border-radius: var(--radius-lg);
@@ -59,17 +59,26 @@
       }
 
       .logo-badge {
-        height: 120px;
-        width: 120px;
-        border-radius: 32px;
+        height: 100px;
+        width: 100px;
+        border-radius: 20px;
         background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
         display: grid;
         place-items: center;
         color: white;
         font-weight: 700;
-        font-size: 18px;
+        font-size: 16px;
         text-transform: uppercase;
         letter-spacing: 0.08em;
+        border: 2px solid var(--brand-border);
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .logo-badge img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
       }
 
       .headline {
@@ -289,11 +298,9 @@
         display: none;
       }
 
-      .header-top {
+      .header-content {
         display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 20px;
-        align-items: center;
+        gap: 16px;
       }
 
       .header-info {
@@ -517,6 +524,7 @@
 
       @media (max-width: 720px) {
         header {
+          grid-template-columns: 1fr;
           padding: 24px;
         }
 
@@ -664,11 +672,11 @@
       </section>
 
       <header>
-        <div class="header-top">
-          <div class="logo-badge" aria-label="Client logo placeholder" data-field="logoWrap">
-            <img id="logo-image" alt="Client logo" class="hidden" />
-            <span id="logo-fallback">Logo</span>
-          </div>
+        <div class="logo-badge" aria-label="Client logo placeholder" data-field="logoWrap">
+          <img id="logo-image" alt="Client logo" class="hidden" />
+          <span id="logo-fallback">Logo</span>
+        </div>
+        <div class="header-content">
           <div class="header-info">
             <div class="pill" data-field="projectName">Project Name</div>
             <div class="meta">
@@ -676,22 +684,22 @@
               <span data-field="reportDate">Report date: March 2026</span>
             </div>
           </div>
-        </div>
-        <div class="headline">
-          <div class="pill" data-field="reportTitle">Monthly QA Report</div>
-          <h1 data-field="heroTitle">Client Name — March 2026</h1>
-          <div class="meta">
-            <span data-field="project">Project: iwd-qa-report</span>
-            <span data-field="preparedBy">Prepared by: QA & Web Performance Team</span>
-            <span data-field="reportingWindow">Reporting window: Feb 1, 2026 – Feb 29, 2026</span>
-            <span data-field="nextReview">Next review: Mar 31, 2026</span>
+          <div class="headline">
+            <div class="pill" data-field="reportTitle">Monthly QA Report</div>
+            <h1 data-field="heroTitle">Client Name — March 2026</h1>
+            <div class="meta">
+              <span data-field="project">Project: iwd-qa-report</span>
+              <span data-field="preparedBy">Prepared by: QA & Web Performance Team</span>
+              <span data-field="reportingWindow">Reporting window: Feb 1, 2026 – Feb 29, 2026</span>
+              <span data-field="nextReview">Next review: Mar 31, 2026</span>
+            </div>
           </div>
-        </div>
-        <div class="meta">
-          <span class="pill" data-field="siteUrl">Site URL: https://client-site.com</span>
-          <span class="pill" data-field="primaryContact">Primary Contact: Name</span>
-          <span class="pill" data-field="accountManager">Account Manager: Name</span>
-          <span class="pill" data-field="reportStatus">Report Status: Draft</span>
+          <div class="meta">
+            <span class="pill" data-field="siteUrl">Site URL: https://client-site.com</span>
+            <span class="pill" data-field="primaryContact">Primary Contact: Name</span>
+            <span class="pill" data-field="accountManager">Account Manager: Name</span>
+            <span class="pill" data-field="reportStatus">Report Status: Draft</span>
+          </div>
         </div>
       </header>
 
