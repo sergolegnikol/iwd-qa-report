@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QA Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --brand-primary: #1d4ed8;
+        --brand-accent: #0ea5e9;
+        --brand-ink: #0f172a;
+        --brand-muted: #64748b;
+        --brand-surface: #f8fafc;
+        --brand-border: #e2e8f0;
+        --brand-highlight: #fef3c7;
+        --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+        --radius-lg: 24px;
+        --radius-md: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        color: var(--brand-ink);
+        background: radial-gradient(circle at top, #eef2ff 0%, #f8fafc 52%, #ffffff 100%);
+      }
+
+      .page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 48px 24px 120px;
+      }
+
+      header {
+        display: grid;
+        gap: 18px;
+        padding: 28px 32px;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--brand-border);
+        background: white;
+        box-shadow: var(--shadow-soft);
+      }
+
+      header h1 {
+        margin: 0;
+        font-family: "Fraunces", serif;
+        font-size: clamp(2rem, 3vw, 2.8rem);
+      }
+
+      .subtitle {
+        color: var(--brand-muted);
+        max-width: 720px;
+      }
+
+      .card {
+        background: white;
+        border: 1px solid var(--brand-border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-soft);
+        padding: 20px 22px;
+      }
+
+      .grid {
+        display: grid;
+        gap: 20px;
+      }
+
+      .grid.cols-2 {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+
+      .section {
+        margin-top: 28px;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        font-size: 0.9rem;
+      }
+
+      input {
+        border-radius: 12px;
+        border: 1px solid var(--brand-border);
+        padding: 10px 12px;
+        font-family: inherit;
+      }
+
+      button {
+        border-radius: 999px;
+        border: 1px solid transparent;
+        padding: 10px 16px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      button.primary {
+        background: var(--brand-accent);
+        color: #0f172a;
+      }
+
+      button.ghost {
+        background: transparent;
+        border-color: var(--brand-border);
+        color: var(--brand-ink);
+      }
+
+      button.danger {
+        background: #fee2e2;
+        color: #991b1b;
+        border-color: #fecaca;
+      }
+
+      .project-list {
+        display: grid;
+        gap: 16px;
+      }
+
+      .project-meta {
+        display: grid;
+        gap: 6px;
+        color: var(--brand-muted);
+        font-size: 0.9rem;
+      }
+
+      .project-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .notice {
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: var(--brand-highlight);
+        border: 1px solid #fde68a;
+        color: #92400e;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>QA Admin Panel</h1>
+        <p class="subtitle">
+          Manage QA report projects, open the report editor, and keep per-client data organized by subfolder.
+        </p>
+      </header>
+
+      <section class="section grid" id="login-card">
+        <div class="card">
+          <h2>QA Login</h2>
+          <p class="subtitle">Log in with the QA account to access configuration.</p>
+          <button class="primary" id="login-button">Log in</button>
+          <button class="ghost" id="logout-button">Log out</button>
+          <p class="subtitle" id="login-status"></p>
+        </div>
+      </section>
+
+      <section class="section hidden" id="admin-panel">
+        <div class="grid cols-2">
+          <div class="card">
+            <h2>Add Project</h2>
+            <p class="subtitle">Project slugs power the report subfolder and data storage.</p>
+            <div class="grid">
+              <label>
+                Project slug (example: dms or schoolfix)
+                <input type="text" id="project-slug" placeholder="dms" />
+              </label>
+              <label>
+                Client name
+                <input type="text" id="project-client" placeholder="Client Inc." />
+              </label>
+            </div>
+            <div class="project-actions">
+              <button class="primary" id="add-project">Add project</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="notice">
+            Reports now live in subfolders on this site (for example, /dms or /schoolfix). Keep the Netlify
+            redirect rule that routes all paths to the report template so these URLs load correctly.
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>Projects</h2>
+          <div class="project-list" id="project-list"></div>
+        </div>
+      </section>
+    </div>
+
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      const allowedAdmins = ["irina@iwdagency.com"];
+      const projectStorageKey = "qa-report-projects";
+
+      const loginCard = document.getElementById("login-card");
+      const adminPanel = document.getElementById("admin-panel");
+      const loginButton = document.getElementById("login-button");
+      const logoutButton = document.getElementById("logout-button");
+      const loginStatus = document.getElementById("login-status");
+      const projectSlugInput = document.getElementById("project-slug");
+      const projectClientInput = document.getElementById("project-client");
+      const addProjectButton = document.getElementById("add-project");
+      const projectList = document.getElementById("project-list");
+
+      const sanitizeSlug = (value) => {
+        if (!value) return "";
+        return value
+          .toLowerCase()
+          .trim()
+          .replace(/^\//, "")
+          .replace(/[^a-z0-9-]/g, "-")
+          .replace(/-+/g, "-")
+          .replace(/^-|-$/g, "");
+      };
+
+      const loadProjects = () => {
+        try {
+          const stored = localStorage.getItem(projectStorageKey);
+          if (stored) {
+            return JSON.parse(stored);
+          }
+        } catch (error) {
+          console.warn("Unable to parse stored projects", error);
+        }
+        return [];
+      };
+
+      const saveProjects = (projects) => {
+        localStorage.setItem(projectStorageKey, JSON.stringify(projects));
+      };
+
+      const projectUrl = (slug) => `${window.location.origin}/${slug}`;
+
+      const reportEditorUrl = (slug) => `/${slug}?admin=1`;
+
+      const renderProjects = () => {
+        const projects = loadProjects();
+        projectList.innerHTML = "";
+        if (!projects.length) {
+          const empty = document.createElement("div");
+          empty.className = "card";
+          empty.textContent = "No projects yet. Add one to get started.";
+          projectList.appendChild(empty);
+          return;
+        }
+
+        projects.forEach((project) => {
+          const card = document.createElement("div");
+          card.className = "card";
+
+          const url = projectUrl(project.slug);
+
+          card.innerHTML = `
+            <strong>${project.slug}</strong>
+            <div class="project-meta">
+              <span>Client: ${project.clientName || "Not set"}</span>
+              <span>Report URL: ${url}</span>
+              <span>Editor URL: ${reportEditorUrl(project.slug)}</span>
+            </div>
+          `;
+
+          const actions = document.createElement("div");
+          actions.className = "project-actions";
+
+          const editButton = document.createElement("button");
+          editButton.className = "primary";
+          editButton.textContent = "Edit report";
+          editButton.addEventListener("click", () => {
+            window.location.href = reportEditorUrl(project.slug);
+          });
+
+          const openButton = document.createElement("button");
+          openButton.className = "ghost";
+          openButton.textContent = "Open report";
+          openButton.addEventListener("click", () => {
+            window.open(url, "_blank");
+          });
+
+          const removeButton = document.createElement("button");
+          removeButton.className = "danger";
+          removeButton.textContent = "Remove";
+          removeButton.addEventListener("click", () => {
+            const next = loadProjects().filter((item) => item.slug !== project.slug);
+            saveProjects(next);
+            renderProjects();
+          });
+
+          actions.appendChild(editButton);
+          actions.appendChild(openButton);
+          actions.appendChild(removeButton);
+          card.appendChild(actions);
+          projectList.appendChild(card);
+        });
+      };
+
+      addProjectButton.addEventListener("click", () => {
+        const slug = sanitizeSlug(projectSlugInput.value);
+        if (!slug) {
+          alert("Please enter a valid project slug.");
+          return;
+        }
+
+        const clientName = projectClientInput.value.trim();
+        const projects = loadProjects();
+        const existing = projects.find((project) => project.slug === slug);
+        if (existing) {
+          existing.clientName = clientName || existing.clientName;
+        } else {
+          projects.push({
+            slug,
+            clientName,
+            createdAt: new Date().toISOString()
+          });
+        }
+        saveProjects(projects);
+        projectSlugInput.value = "";
+        projectClientInput.value = "";
+        renderProjects();
+      });
+
+      const isAllowedAdmin = (user) =>
+        user && user.email && allowedAdmins.includes(user.email.toLowerCase());
+
+      const updateAuthState = (user) => {
+        if (user && isAllowedAdmin(user)) {
+          loginStatus.textContent = `Logged in as ${user.email}.`;
+          adminPanel.classList.remove("hidden");
+          renderProjects();
+          return;
+        }
+
+        adminPanel.classList.add("hidden");
+        if (user && !isAllowedAdmin(user)) {
+          loginStatus.textContent = "Access denied. Log in with the authorized QA account.";
+          if (window.netlifyIdentity) {
+            netlifyIdentity.logout();
+          }
+          return;
+        }
+
+        loginStatus.textContent = "Not logged in.";
+      };
+
+      if (window.netlifyIdentity) {
+        netlifyIdentity.on("init", (user) => updateAuthState(user));
+        netlifyIdentity.on("login", (user) => {
+          updateAuthState(user);
+          netlifyIdentity.close();
+        });
+        netlifyIdentity.on("logout", () => updateAuthState(null));
+        netlifyIdentity.init();
+      }
+
+      loginButton.addEventListener("click", () => {
+        if (window.netlifyIdentity) {
+          netlifyIdentity.open("login");
+        }
+      });
+
+      logoutButton.addEventListener("click", () => {
+        if (window.netlifyIdentity) {
+          netlifyIdentity.logout();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1634 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QA Report Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --brand-primary: #1d4ed8;
+        --brand-accent: #0ea5e9;
+        --brand-ink: #0f172a;
+        --brand-muted: #64748b;
+        --brand-surface: #f8fafc;
+        --brand-border: #e2e8f0;
+        --brand-highlight: #fef3c7;
+        --brand-success: #16a34a;
+        --brand-warning: #f59e0b;
+        --brand-danger: #ef4444;
+        --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+        --radius-lg: 28px;
+        --radius-md: 18px;
+        --radius-sm: 12px;
+        --max-width: 1100px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        color: var(--brand-ink);
+        background: radial-gradient(circle at top, #eef2ff 0%, #f8fafc 52%, #ffffff 100%);
+      }
+
+      .page {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 48px 24px 120px;
+      }
+
+      header {
+        display: grid;
+        gap: 32px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        align-items: center;
+        padding: 32px;
+        background: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-soft);
+        border: 1px solid var(--brand-border);
+      }
+
+      .logo-badge {
+        height: 120px;
+        width: 120px;
+        border-radius: 32px;
+        background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+        display: grid;
+        place-items: center;
+        color: white;
+        font-weight: 700;
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .headline {
+        display: grid;
+        gap: 12px;
+      }
+
+      .headline h1 {
+        font-family: "Fraunces", serif;
+        font-size: clamp(2.4rem, 3vw, 3.4rem);
+        margin: 0;
+      }
+
+      .meta {
+        display: grid;
+        gap: 8px;
+        color: var(--brand-muted);
+        font-size: 0.98rem;
+      }
+
+      .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--brand-border);
+        background: var(--brand-surface);
+        font-size: 0.82rem;
+      }
+
+      .section {
+        margin-top: 36px;
+        padding: 28px 32px;
+        background: white;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--brand-border);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .section h2 {
+        margin: 0 0 12px;
+        font-size: 1.4rem;
+      }
+
+      .section-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .section-note {
+        color: var(--brand-muted);
+        font-size: 0.9rem;
+      }
+
+      .grid {
+        display: grid;
+        gap: 20px;
+      }
+
+      .grid.cols-2 {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+
+      .grid.cols-3 {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .card {
+        border-radius: var(--radius-sm);
+        background: var(--brand-surface);
+        border: 1px solid var(--brand-border);
+        padding: 18px;
+        min-height: 120px;
+      }
+
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 1rem;
+      }
+
+      .metric {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      .status {
+        font-weight: 600;
+      }
+
+      .status.good {
+        color: var(--brand-success);
+      }
+
+      .status.warn {
+        color: var(--brand-warning);
+      }
+
+      .status.risk {
+        color: var(--brand-danger);
+      }
+
+      .list {
+        display: grid;
+        gap: 10px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      .list li {
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: #f8fafc;
+        border: 1px dashed var(--brand-border);
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+        font-size: 0.95rem;
+      }
+
+      .table th,
+      .table td {
+        border-bottom: 1px solid var(--brand-border);
+        padding: 10px 8px;
+        text-align: left;
+      }
+
+      .table th {
+        color: var(--brand-muted);
+        font-weight: 600;
+      }
+
+      .highlight {
+        background: var(--brand-highlight);
+        padding: 12px 16px;
+        border-radius: 14px;
+        border: 1px solid #fde68a;
+      }
+
+      .callout {
+        display: grid;
+        gap: 8px;
+        padding: 16px 18px;
+        border-left: 4px solid var(--brand-primary);
+        background: #eef2ff;
+        border-radius: 10px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        border: 1px solid transparent;
+      }
+
+      .tag.pass {
+        background: rgba(22, 163, 74, 0.12);
+        border-color: rgba(22, 163, 74, 0.3);
+        color: var(--brand-success);
+      }
+
+      .tag.warn {
+        background: rgba(245, 158, 11, 0.12);
+        border-color: rgba(245, 158, 11, 0.3);
+        color: var(--brand-warning);
+      }
+
+      .tag.fail {
+        background: rgba(239, 68, 68, 0.12);
+        border-color: rgba(239, 68, 68, 0.3);
+        color: var(--brand-danger);
+      }
+
+      .tag.info {
+        background: rgba(59, 130, 246, 0.12);
+        border-color: rgba(59, 130, 246, 0.3);
+        color: #2563eb;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .footer {
+        margin-top: 56px;
+        color: var(--brand-muted);
+        font-size: 0.9rem;
+      }
+
+      .restricted {
+        padding: 28px 32px;
+        border-radius: var(--radius-lg);
+        border: 1px solid #fecaca;
+        background: #fff1f2;
+        color: #991b1b;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .page.is-restricted > :not(#restricted-message) {
+        display: none;
+      }
+
+      .header-top {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 20px;
+        align-items: center;
+      }
+
+      .header-info {
+        display: grid;
+        gap: 8px;
+      }
+
+      .header-info .meta {
+        color: var(--brand-muted);
+      }
+
+      .qa-panel {
+        position: relative;
+        margin-bottom: 32px;
+        background: #0f172a;
+        color: #e2e8f0;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(148, 163, 184, 0.3);
+      }
+
+      .qa-panel.is-hidden {
+        display: none;
+      }
+
+      .qa-auth {
+        display: none;
+        gap: 12px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        background: rgba(15, 23, 42, 0.6);
+        margin-bottom: 14px;
+      }
+
+      .qa-auth.visible {
+        display: grid;
+      }
+
+      .qa-auth .auth-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .qa-panel h2 {
+        margin: 0 0 12px;
+        font-size: 1.2rem;
+      }
+
+      .qa-panel p {
+        margin: 0 0 12px;
+        color: rgba(226, 232, 240, 0.8);
+      }
+
+      .qa-panel textarea {
+        width: 100%;
+        min-height: 260px;
+        border-radius: 14px;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        padding: 12px;
+        font-family: "Space Grotesk", sans-serif;
+        background: rgba(15, 23, 42, 0.7);
+        color: #e2e8f0;
+        resize: vertical;
+      }
+
+      .qa-panel .panel-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .qa-panel button {
+        border-radius: 999px;
+        border: 1px solid transparent;
+        padding: 8px 14px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .qa-panel button.primary {
+        background: var(--brand-accent);
+        color: #0f172a;
+      }
+
+      .qa-panel button.ghost {
+        background: transparent;
+        color: #e2e8f0;
+        border-color: rgba(148, 163, 184, 0.5);
+      }
+
+      .qa-panel .panel-grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        margin-bottom: 14px;
+      }
+
+      .qa-panel .panel-grid.header-grid {
+        grid-template-columns: minmax(220px, 280px) repeat(auto-fit, minmax(220px, 1fr));
+        align-items: start;
+      }
+
+      .qa-panel .panel-grid.contacts-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+
+      @media (min-width: 960px) {
+        .qa-panel .panel-grid.contacts-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      .qa-panel label {
+        display: grid;
+        gap: 6px;
+        font-size: 0.9rem;
+      }
+
+      .qa-panel input,
+      .qa-panel select {
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        padding: 8px 10px;
+        background: rgba(15, 23, 42, 0.7);
+        color: #e2e8f0;
+      }
+
+      .qa-panel fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+      }
+
+      .panel-section {
+        padding: 16px;
+        border-radius: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        background: rgba(15, 23, 42, 0.55);
+        margin-bottom: 16px;
+      }
+
+      .domain-results-editor {
+        display: grid;
+        gap: 16px;
+      }
+
+      .domain-result-card {
+        padding: 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        background: rgba(15, 23, 42, 0.7);
+        display: grid;
+        gap: 10px;
+      }
+
+      .domain-result-card textarea {
+        min-height: 140px;
+      }
+
+      .domain-text p {
+        margin: 0 0 12px;
+      }
+
+      .domain-text p:last-child {
+        margin-bottom: 0;
+      }
+
+      .panel-section h3 {
+        margin: 0 0 6px;
+        font-size: 1rem;
+      }
+
+      .panel-section p {
+        margin: 0 0 12px;
+        color: rgba(226, 232, 240, 0.75);
+        font-size: 0.9rem;
+      }
+
+      .logo-uploader {
+        display: grid;
+        gap: 10px;
+        align-content: start;
+      }
+
+      .logo-preview {
+        height: 120px;
+        width: 100%;
+        border-radius: 18px;
+        border: 1px dashed rgba(148, 163, 184, 0.5);
+        display: grid;
+        place-items: center;
+        background: rgba(15, 23, 42, 0.7);
+        color: rgba(226, 232, 240, 0.8);
+        font-weight: 600;
+        overflow: hidden;
+      }
+
+      .logo-preview img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+
+      .section-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        background: rgba(15, 23, 42, 0.7);
+      }
+
+      .section.is-hidden {
+        display: none;
+      }
+
+      @media (max-width: 720px) {
+        header {
+          padding: 24px;
+        }
+
+        .section {
+          padding: 24px;
+        }
+
+        .qa-panel {
+          position: relative;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="restricted hidden" id="restricted-message">
+        <strong>Restricted access.</strong> QA reports are only available via project subfolders.
+      </section>
+      <section class="qa-panel is-hidden" id="qa-panel" aria-label="QA configuration panel">
+        <h2>QA Configuration Panel</h2>
+        <div class="qa-auth" id="qa-auth">
+          <div id="qa-auth-message">Login required to edit report data.</div>
+          <div class="auth-actions">
+            <button class="primary" id="qa-login">Log in</button>
+            <button class="ghost" id="qa-logout">Log out</button>
+          </div>
+        </div>
+        <p>
+          Manage the report header, monthly timing, and visible sections. Changes update the report instantly,
+          while the JSON editor controls advanced data like test rows.
+        </p>
+        <fieldset id="qa-panel-body" disabled>
+          <div class="panel-section">
+            <h3>Report Header</h3>
+            <p>Logo, project name, domain, and report date appear in the top block of the report.</p>
+            <div class="panel-grid header-grid">
+              <div class="logo-uploader">
+                <div class="logo-preview" id="logo-preview">Logo preview</div>
+                <input type="file" id="field-logoUpload" accept="image/*" />
+                <button class="ghost" id="remove-logo">Remove logo</button>
+              </div>
+              <label>
+                Project Name
+                <input type="text" id="field-projectName" />
+              </label>
+              <label>
+                Project Domain
+                <input type="text" id="field-projectDomain" />
+              </label>
+              <label>
+                Report Date
+                <input type="text" id="field-reportDate" placeholder="March 2026" />
+              </label>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <h3>Report Summary</h3>
+            <p>Monthly summary fields that drive the report title, status, and top metadata.</p>
+            <div class="panel-grid">
+              <label>
+                Client Name
+                <input type="text" id="field-clientName" />
+              </label>
+              <label>
+                Report Title
+                <input type="text" id="field-reportTitle" />
+              </label>
+              <label>
+                Report Month
+                <input type="text" id="field-reportMonth" />
+              </label>
+              <label>
+                Report Status
+                <select id="field-reportStatus">
+                  <option value="Draft">Draft</option>
+                  <option value="Final">Final</option>
+                </select>
+              </label>
+              <label>
+                Reporting Window
+                <input type="text" id="field-reportingWindow" />
+              </label>
+              <label>
+                Next Review
+                <input type="text" id="field-nextReview" />
+              </label>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <h3>Contacts & Links</h3>
+            <p>Keep client contact details and the primary site URL consistent month to month.</p>
+            <div class="panel-grid contacts-grid">
+              <label>
+                Site URL
+                <input type="text" id="field-siteUrl" />
+              </label>
+              <label>
+                Primary Contact
+                <input type="text" id="field-primaryContact" />
+              </label>
+              <label>
+                Account Manager
+                <input type="text" id="field-accountManager" />
+              </label>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <h3>Section Visibility</h3>
+            <p>Toggle sections on or off based on the project scope for this month.</p>
+            <div class="panel-grid">
+              <label class="section-toggle">
+                <input type="checkbox" id="toggle-cover-metrics" />
+                Executive Snapshot
+              </label>
+              <label class="section-toggle">
+                <input type="checkbox" id="toggle-executive-overview" />
+                Executive Overview
+              </label>
+              <label class="section-toggle">
+                <input type="checkbox" id="toggle-domain-details" />
+                Domain Test Results
+              </label>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <h3>Domain Test Results Editor</h3>
+            <p>Edit up to three domain result sections. Text is rendered as paragraphs in the report.</p>
+            <div class="domain-results-editor" id="domain-results-editor"></div>
+          </div>
+
+          <div class="panel-section">
+            <h3>Advanced JSON</h3>
+            <p>Edit the full JSON for metrics, tests, and notes when needed.</p>
+            <textarea id="report-json" spellcheck="false"></textarea>
+            <div class="panel-actions">
+              <button class="ghost" id="reset-json">Reset Default</button>
+              <button class="primary" id="save-json">Save</button>
+            </div>
+          </div>
+        </fieldset>
+      </section>
+
+      <header>
+        <div class="header-top">
+          <div class="logo-badge" aria-label="Client logo placeholder" data-field="logoWrap">
+            <img id="logo-image" alt="Client logo" class="hidden" />
+            <span id="logo-fallback">Logo</span>
+          </div>
+          <div class="header-info">
+            <div class="pill" data-field="projectName">Project Name</div>
+            <div class="meta">
+              <span data-field="projectDomain">Domain: client-site.com</span>
+              <span data-field="reportDate">Report date: March 2026</span>
+            </div>
+          </div>
+        </div>
+        <div class="headline">
+          <div class="pill" data-field="reportTitle">Monthly QA Report</div>
+          <h1 data-field="heroTitle">Client Name — March 2026</h1>
+          <div class="meta">
+            <span data-field="project">Project: iwd-qa-report</span>
+            <span data-field="preparedBy">Prepared by: QA & Web Performance Team</span>
+            <span data-field="reportingWindow">Reporting window: Feb 1, 2026 – Feb 29, 2026</span>
+            <span data-field="nextReview">Next review: Mar 31, 2026</span>
+          </div>
+        </div>
+        <div class="meta">
+          <span class="pill" data-field="siteUrl">Site URL: https://client-site.com</span>
+          <span class="pill" data-field="primaryContact">Primary Contact: Name</span>
+          <span class="pill" data-field="accountManager">Account Manager: Name</span>
+          <span class="pill" data-field="reportStatus">Report Status: Draft</span>
+        </div>
+      </header>
+
+      <section class="section" data-section="cover-metrics">
+        <div class="section-header">
+          <h2>Executive Snapshot</h2>
+          <span class="section-note" data-field="snapshotNote">Mission-critical platform audit summary</span>
+        </div>
+        <div class="grid cols-3" id="metric-cards"></div>
+        <div class="highlight" style="margin-top: 18px;" data-field="snapshotHighlight">
+          Highlights: Improved performance on key landing pages, resolved two ADA focus state issues, and consolidated
+          analytics tags. Primary risks include legacy script blocking and missing CSP directives.
+        </div>
+      </section>
+
+      <section class="section" data-section="executive-overview">
+        <div class="section-header">
+          <h2>Executive Overview</h2>
+          <span class="section-note">Scope, methodology, and scoring key</span>
+        </div>
+        <p data-field="overviewSummary">
+          This report documents a comprehensive Quality Assurance audit of the client platform. The audit evaluates
+          functional feature testing, catalog quality, checkout readiness, accessibility, security posture, PCI scope,
+          performance, and technical SEO.
+        </p>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3>Audit Scope</h3>
+            <ul class="list" id="overview-scope"></ul>
+          </div>
+          <div class="card">
+            <h3>Scoring Key</h3>
+            <ul class="list" id="overview-scoring"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-section="domain-scorecard">
+        <div class="section-header">
+          <h2>Overall Domain Scorecard</h2>
+          <span class="section-note" data-field="scorecardNote">Each audit domain is scored 1–10</span>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Audit Domain</th>
+              <th>Score</th>
+              <th>Summary</th>
+            </tr>
+          </thead>
+          <tbody id="scorecard-rows"></tbody>
+        </table>
+      </section>
+
+      <section class="section" data-section="domain-details">
+        <div class="section-header">
+          <h2>Domain Test Results</h2>
+          <span class="section-note" data-field="domainNote">PASS / FAIL / WARN / INFO findings</span>
+        </div>
+        <div id="domain-sections"></div>
+      </section>
+
+      <section class="section" data-section="recommendations">
+        <div class="section-header">
+          <h2>Recommended Tasks for Next Month</h2>
+          <span class="section-note">Proposed work items for approval</span>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Impact</th>
+              <th>Effort</th>
+              <th>Owner</th>
+            </tr>
+          </thead>
+          <tbody id="next-steps"></tbody>
+        </table>
+      </section>
+
+      <section class="section" data-section="approval">
+        <div class="section-header">
+          <h2>Approval & Next Steps</h2>
+          <span class="section-note">Decision checkpoint for the next month</span>
+        </div>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3>Approval Status</h3>
+            <p class="status warn" data-field="approvalStatus">Pending client confirmation</p>
+            <p data-field="approvalBy">Approval by: Name, Title</p>
+          </div>
+          <div class="card">
+            <h3>Timeline</h3>
+            <ul class="list" id="approval-timeline"></ul>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer" data-field="footerNote">
+        Report template version 1.0. Update sections as needed for monthly reporting.
+      </div>
+    </div>
+
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      const defaultReportData = {
+        branding: {
+          logoText: "DMC",
+          logoUrl: "",
+          reportTitle: "Website QA Testing Report",
+          reportMonth: "February 2026",
+          reportDate: "March 2026",
+          clientName: "Daniels Manufacturing Corp. (DMC)",
+          reportStatus: "Draft",
+          projectName: "DMCtools QA Audit",
+          projectDomain: "dmctools.com",
+          siteUrl: "https://dmctools.com",
+          project: "Project: iwd-qa-report",
+          preparedBy: "Prepared by: IWD Agency QA Team",
+          reportingWindow: "Reporting window: Feb 1, 2026 – Feb 28, 2026",
+          nextReview: "Next review: Mar 31, 2026",
+          primaryContact: "Primary Contact: Name",
+          accountManager: "Account Manager: Name"
+        },
+        sections: {
+          coverMetrics: true,
+          executiveOverview: true,
+          domainDetails: true
+        },
+        snapshot: {
+          note: "Mission-critical eCommerce platform audit",
+          highlight:
+            "Highlights: Core commerce tools are functioning, with targeted UX improvements needed for search relevance, accessibility labels, and mobile-friendly filters.",
+          metrics: [
+            {
+              label: "Product Pages Audited",
+              value: "152",
+              status: "11 strengths confirmed"
+            },
+            {
+              label: "Test Domains Evaluated",
+              value: "8",
+              status: "Full cross-functional coverage"
+            },
+            {
+              label: "Issues Logged",
+              value: "24",
+              status: "Prioritized by impact"
+            }
+          ]
+        },
+        overview: {
+          summary:
+            "This report documents a comprehensive Quality Assurance audit of the DMCtools.com platform, covering functional features, catalog quality, checkout readiness, accessibility, security posture, PCI scope, performance, and technical SEO.",
+          scope: [
+            "152 product pages, 8 test domains, and 24 issues logged",
+            "Desktop + mobile breakpoints (Chrome, Safari, Edge)",
+            "Automated scans + manual validation of priority flows"
+          ],
+          scoringKey: [
+            "PASS: Feature works as intended",
+            "FAIL: Bug or broken functionality",
+            "WARN: Works but sub-optimal",
+            "INFO: Advisory or enhancement"
+          ]
+        },
+        scorecard: [
+          {
+            domain: "Functional Feature Testing",
+            score: "7/10",
+            summary: "Tool search, configurator, compare, and calibration add-on function with notable gaps."
+          },
+          {
+            domain: "Product Catalog & Search",
+            score: "6/10",
+            summary: "1,500+ SKU catalog with UX and relevance issues across filters and pagination."
+          },
+          {
+            domain: "Checkout & Account Management",
+            score: "7/10",
+            summary: "RMA, calibration cert add-ons, and multi-ship work; guest checkout needs cookie clarity."
+          },
+          {
+            domain: "ADA / WCAG 2.2 Compliance",
+            score: "5/10",
+            summary: "Missing skip-links, form labels, ARIA roles, and contrast failures in key flows."
+          },
+          {
+            domain: "Security Headers & HTTPS",
+            score: "7/10",
+            summary: "HTTPS solid, CSP absent, policy headers require updates."
+          },
+          {
+            domain: "PCI DSS Posture",
+            score: "8/10",
+            summary: "Direct card processing verified; JS audit recommended."
+          },
+          {
+            domain: "Performance / Core Web Vitals",
+            score: "6/10",
+            summary: "Large images and catalog weight create LCP warnings on mobile."
+          },
+          {
+            domain: "SEO Technical Health",
+            score: "6/10",
+            summary: "Missing structured data and duplicate meta descriptions in key categories."
+          }
+        ],
+        domains: [
+          {
+            title: "Functional Feature Testing",
+            subtitle: "Core website features tested against expected behavior",
+            notes: [
+              "Tool selection search, product comparison, calibration certificate add-on, and document library reviewed.",
+              "Focus on JS-dependent features and edge-case handling."
+            ],
+            tests: [
+              {
+                feature: "Tool selection search loads",
+                status: "PASS",
+                priority: "Critical",
+                details: "Connector search form renders and functions."
+              },
+              {
+                feature: "No-result state handling",
+                status: "WARN",
+                priority: "High",
+                details: "Blank state lacks guidance; add a clear CTA for support."
+              },
+              {
+                feature: "Search indexed in Google",
+                status: "FAIL",
+                priority: "Medium",
+                details: "JS-only rendering; confirm server-side rendering or prerendering."
+              }
+            ]
+          },
+          {
+            title: "Product Catalog & Search",
+            subtitle: "1,500+ SKU catalog with 30+ filter dimensions",
+            notes: [
+              "Catalog pagination and relevance scoring reviewed.",
+              "Image coverage and compare controls validated."
+            ],
+            tests: [
+              {
+                feature: "Category page filters load and apply",
+                status: "PASS",
+                priority: "Critical",
+                details: "Qualification, power type, and connector filters function."
+              },
+              {
+                feature: "152-page catalog pagination",
+                status: "WARN",
+                priority: "High",
+                details: "Add higher per-page options to reduce navigation burden."
+              },
+              {
+                feature: "Search relevance for generic terms",
+                status: "WARN",
+                priority: "High",
+                details: "Relevance weighting should emphasize product type tags."
+              }
+            ]
+          },
+          {
+            title: "Checkout & Account Management",
+            subtitle: "Checkout, account, and RMA testing",
+            notes: ["Guest checkout and multi-ship flows validated.", "Cookie consent impacts guest checkout UX."] ,
+            tests: [
+              {
+                feature: "Checkout loads with guest option",
+                status: "PASS",
+                priority: "Critical",
+                details: "Guest checkout available after cookie acceptance."
+              },
+              {
+                feature: "RMA request form",
+                status: "PASS",
+                priority: "High",
+                details: "Request flow submits and returns confirmation."
+              },
+              {
+                feature: "Cookie consent visibility",
+                status: "WARN",
+                priority: "Medium",
+                details: "Cookie banner can obscure checkout actions on mobile."
+              }
+            ]
+          }
+        ],
+        domainResults: [
+          {
+            title: "Functional Feature Testing",
+            subtitle: "Core website features tested against expected behavior",
+            content:
+              "Tool selection search, product comparison, calibration certificate add-on, and document library reviewed.\n" +
+              "Focus on JS-dependent features and edge-case handling.\n\n" +
+              "PASS: Connector search form renders and functions.\n" +
+              "WARN: Blank state lacks guidance; add a clear CTA for support.\n" +
+              "FAIL: JS-only rendering; confirm server-side rendering or prerendering."
+          },
+          {
+            title: "Product Catalog & Search",
+            subtitle: "1,500+ SKU catalog with 30+ filter dimensions",
+            content:
+              "Catalog pagination and relevance scoring reviewed.\n" +
+              "Image coverage and compare controls validated.\n\n" +
+              "PASS: Qualification, power type, and connector filters function.\n" +
+              "WARN: Add higher per-page options to reduce navigation burden.\n" +
+              "WARN: Relevance weighting should emphasize product type tags."
+          },
+          {
+            title: "Checkout & Account Management",
+            subtitle: "Checkout, account, and RMA testing",
+            content:
+              "Guest checkout and multi-ship flows validated.\n" +
+              "Cookie consent impacts guest checkout UX.\n\n" +
+              "PASS: Guest checkout available after cookie acceptance.\n" +
+              "PASS: Request flow submits and returns confirmation.\n" +
+              "WARN: Cookie banner can obscure checkout actions on mobile."
+          }
+        ],
+        nextSteps: [
+          {
+            task: "Implement CSP updates + Referrer-Policy",
+            impact: "High",
+            effort: "Medium",
+            owner: "DevOps"
+          },
+          {
+            task: "Accessibility fixes for form labels",
+            impact: "High",
+            effort: "Low",
+            owner: "Frontend"
+          },
+          {
+            task: "Optimize homepage hero image",
+            impact: "Medium",
+            effort: "Low",
+            owner: "Frontend"
+          }
+        ],
+        approval: {
+          status: "Pending client confirmation",
+          by: "Approval by: Name, Title",
+          timeline: [
+            "QA review meeting: Mar 5, 2026",
+            "Work begins: Mar 8, 2026",
+            "Next report draft: Apr 1, 2026"
+          ]
+        },
+        footerNote: "Report template version 1.0. Update sections as needed for monthly reporting."
+      };
+
+      const allowedAdmins = ["irina@iwdagency.com"];
+      const searchParams = new URLSearchParams(window.location.search);
+
+      const sanitizeSlug = (value) => {
+        if (!value) return "";
+        return value
+          .toLowerCase()
+          .trim()
+          .replace(/^\//, "")
+          .replace(/[^a-z0-9-]/g, "-")
+          .replace(/-+/g, "-")
+          .replace(/^-|-$/g, "");
+      };
+
+      const explicitProject = sanitizeSlug(searchParams.get("project"));
+      const path = window.location.pathname.replace(/^\/+|\/+$/g, "");
+      const pathSegment = path && path !== "admin" ? sanitizeSlug(path.split("/")[0]) : "";
+      const isRootAccess = !explicitProject && !pathSegment;
+      const projectSlug = explicitProject || pathSegment || "iwd-qa-report";
+      const storageKey = `qaReportData:${projectSlug}`;
+      const legacyKey = "qaReportData";
+      if (!localStorage.getItem(storageKey) && localStorage.getItem(legacyKey)) {
+        localStorage.setItem(storageKey, localStorage.getItem(legacyKey));
+      }
+
+      const fieldMap = {
+        logoText: "branding.logoText",
+        logoUrl: "branding.logoUrl",
+        reportTitle: "branding.reportTitle",
+        reportMonth: "branding.reportMonth",
+        reportDate: "branding.reportDate",
+        clientName: "branding.clientName",
+        reportStatus: "branding.reportStatus",
+        projectName: "branding.projectName",
+        projectDomain: "branding.projectDomain",
+        siteUrl: "branding.siteUrl",
+        project: "branding.project",
+        preparedBy: "branding.preparedBy",
+        reportingWindow: "branding.reportingWindow",
+        nextReview: "branding.nextReview",
+        primaryContact: "branding.primaryContact",
+        accountManager: "branding.accountManager"
+      };
+
+      const quickFields = {
+        projectName: document.getElementById("field-projectName"),
+        projectDomain: document.getElementById("field-projectDomain"),
+        reportDate: document.getElementById("field-reportDate"),
+        clientName: document.getElementById("field-clientName"),
+        reportTitle: document.getElementById("field-reportTitle"),
+        reportMonth: document.getElementById("field-reportMonth"),
+        reportStatus: document.getElementById("field-reportStatus"),
+        reportingWindow: document.getElementById("field-reportingWindow"),
+        nextReview: document.getElementById("field-nextReview"),
+        siteUrl: document.getElementById("field-siteUrl"),
+        primaryContact: document.getElementById("field-primaryContact"),
+        accountManager: document.getElementById("field-accountManager")
+      };
+
+      const jsonEditor = document.getElementById("report-json");
+      const resetButton = document.getElementById("reset-json");
+      const saveButton = document.getElementById("save-json");
+      const qaPanel = document.getElementById("qa-panel");
+      const qaPanelBody = document.getElementById("qa-panel-body");
+      const qaAuth = document.getElementById("qa-auth");
+      const qaAuthMessage = document.getElementById("qa-auth-message");
+      const qaLoginButton = document.getElementById("qa-login");
+      const qaLogoutButton = document.getElementById("qa-logout");
+      const page = document.querySelector(".page");
+      const restrictedMessage = document.getElementById("restricted-message");
+      const logoPreview = document.getElementById("logo-preview");
+      const logoImage = document.getElementById("logo-image");
+      const logoFallback = document.getElementById("logo-fallback");
+      const logoUploadInput = document.getElementById("field-logoUpload");
+      const removeLogoButton = document.getElementById("remove-logo");
+      const domainResultsEditor = document.getElementById("domain-results-editor");
+      const sectionToggles = {
+        coverMetrics: document.getElementById("toggle-cover-metrics"),
+        executiveOverview: document.getElementById("toggle-executive-overview"),
+        domainDetails: document.getElementById("toggle-domain-details")
+      };
+
+      const getValue = (obj, path) =>
+        path.split(".").reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : ""), obj);
+
+      const setValue = (obj, path, value) => {
+        const keys = path.split(".");
+        const last = keys.pop();
+        let ref = obj;
+        keys.forEach((key) => {
+          if (!ref[key]) {
+            ref[key] = {};
+          }
+          ref = ref[key];
+        });
+        ref[last] = value;
+      };
+
+      const loadData = () => {
+        try {
+          const stored = localStorage.getItem(storageKey);
+          if (stored) {
+            return JSON.parse(stored);
+          }
+        } catch (error) {
+          console.warn("Unable to parse stored report JSON", error);
+        }
+        return JSON.parse(JSON.stringify(defaultReportData));
+      };
+
+      const syncQuickFields = (data) => {
+        quickFields.projectName.value = data.branding.projectName || "";
+        quickFields.projectDomain.value = data.branding.projectDomain || "";
+        quickFields.reportDate.value = data.branding.reportDate || "";
+        quickFields.clientName.value = data.branding.clientName;
+        quickFields.reportTitle.value = data.branding.reportTitle;
+        quickFields.reportMonth.value = data.branding.reportMonth;
+        quickFields.reportStatus.value = data.branding.reportStatus;
+        quickFields.reportingWindow.value = data.branding.reportingWindow;
+        quickFields.nextReview.value = data.branding.nextReview;
+        quickFields.siteUrl.value = data.branding.siteUrl;
+        quickFields.primaryContact.value = data.branding.primaryContact;
+        quickFields.accountManager.value = data.branding.accountManager;
+      };
+
+      const updateHeroTitle = (data) => {
+        const hero = document.querySelector('[data-field="heroTitle"]');
+        hero.textContent = `${data.branding.clientName} — ${data.branding.reportMonth}`;
+      };
+
+      const renderMetrics = (data) => {
+        const metrics = document.getElementById("metric-cards");
+        metrics.innerHTML = "";
+        data.snapshot.metrics.forEach((metric) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <h3>${metric.label}</h3>
+            <div class="metric">${metric.value}</div>
+            <div class="status">${metric.status}</div>
+          `;
+          metrics.appendChild(card);
+        });
+      };
+
+      const renderOverview = (data) => {
+        const scopeList = document.getElementById("overview-scope");
+        scopeList.innerHTML = "";
+        data.overview.scope.forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          scopeList.appendChild(li);
+        });
+
+        const scoringList = document.getElementById("overview-scoring");
+        scoringList.innerHTML = "";
+        data.overview.scoringKey.forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          scoringList.appendChild(li);
+        });
+      };
+
+      const renderScorecard = (data) => {
+        const rows = document.getElementById("scorecard-rows");
+        rows.innerHTML = "";
+        data.scorecard.forEach((entry) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${entry.domain}</td>
+            <td>${entry.score}</td>
+            <td>${entry.summary}</td>
+          `;
+          rows.appendChild(tr);
+        });
+      };
+
+      const formatTextBlock = (text) => {
+        const safe = String(text || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+        return safe
+          .split(/\n{2,}/)
+          .map((paragraph) => `<p>${paragraph.replace(/\n/g, "<br>")}</p>`)
+          .join("");
+      };
+
+      const buildDomainResultsFromLegacy = (domains) =>
+        (domains || []).slice(0, 3).map((domain) => {
+          const notes = (domain.notes || []).join("\n");
+          const tests = (domain.tests || [])
+            .map(
+              (test) => `${test.status}: ${test.feature} (${test.priority}) — ${test.details}`
+            )
+            .join("\n");
+          return {
+            title: domain.title || "Domain Test Results",
+            subtitle: domain.subtitle || "",
+            content: [notes, tests].filter(Boolean).join("\n\n")
+          };
+        });
+
+      const ensureDomainResults = (data) => {
+        if (!data.domainResults || !data.domainResults.length) {
+          const fallback = buildDomainResultsFromLegacy(data.domains);
+          data.domainResults = fallback.length
+            ? fallback
+            : JSON.parse(JSON.stringify(defaultReportData.domainResults));
+        }
+        if (data.domainResults.length < 3) {
+          const fill = JSON.parse(JSON.stringify(defaultReportData.domainResults));
+          data.domainResults = data.domainResults.concat(fill.slice(data.domainResults.length));
+        }
+      };
+
+      const renderDomainResults = (data) => {
+        const container = document.getElementById("domain-sections");
+        container.innerHTML = "";
+        ensureDomainResults(data);
+        data.domainResults.forEach((domain) => {
+          const section = document.createElement("section");
+          section.className = "section";
+          section.innerHTML = `
+            <div class="section-header">
+              <h2>${domain.title}</h2>
+              <span class="section-note">${domain.subtitle || ""}</span>
+            </div>
+            <div class="domain-text">${formatTextBlock(domain.content)}</div>
+          `;
+          container.appendChild(section);
+        });
+      };
+
+      const renderNextSteps = (data) => {
+        const rows = document.getElementById("next-steps");
+        rows.innerHTML = "";
+        data.nextSteps.forEach((step) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${step.task}</td>
+            <td>${step.impact}</td>
+            <td>${step.effort}</td>
+            <td>${step.owner}</td>
+          `;
+          rows.appendChild(tr);
+        });
+      };
+
+      const renderApprovalTimeline = (data) => {
+        const list = document.getElementById("approval-timeline");
+        list.innerHTML = "";
+        data.approval.timeline.forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          list.appendChild(li);
+        });
+      };
+
+      const renderLogo = (data) => {
+        const fallbackText = data.branding.logoText || "Logo";
+        if (logoFallback) {
+          logoFallback.textContent = fallbackText;
+        }
+        if (data.branding.logoUrl) {
+          if (logoImage) {
+            logoImage.src = data.branding.logoUrl;
+            logoImage.classList.remove("hidden");
+          }
+          if (logoFallback) {
+            logoFallback.classList.add("hidden");
+          }
+        } else {
+          if (logoImage) {
+            logoImage.classList.add("hidden");
+          }
+          if (logoFallback) {
+            logoFallback.classList.remove("hidden");
+          }
+        }
+
+        if (logoPreview) {
+          logoPreview.innerHTML = "";
+          if (data.branding.logoUrl) {
+            const previewImg = document.createElement("img");
+            previewImg.src = data.branding.logoUrl;
+            previewImg.alt = "Logo preview";
+            logoPreview.appendChild(previewImg);
+          } else {
+            logoPreview.textContent = fallbackText;
+          }
+        }
+      };
+
+      const renderSectionVisibility = (data) => {
+        const sections = data.sections || {};
+        Object.entries(sectionToggles).forEach(([key, toggle]) => {
+          const section = document.querySelector(`[data-section='${key.replace(/([A-Z])/g, "-$1").toLowerCase()}']`);
+          const isEnabled = sections[key] !== false;
+          if (toggle) {
+            toggle.checked = isEnabled;
+          }
+          if (section) {
+            section.classList.toggle("is-hidden", !isEnabled);
+          }
+        });
+      };
+
+      const renderDomainResultsEditor = (data) => {
+        if (!domainResultsEditor) return;
+        const isEditing = domainResultsEditor.contains(document.activeElement);
+        if (isEditing) return;
+        ensureDomainResults(data);
+        domainResultsEditor.innerHTML = "";
+        data.domainResults.slice(0, 3).forEach((domain, index) => {
+          const wrapper = document.createElement("div");
+          wrapper.className = "domain-result-card";
+          const titleLabel = document.createElement("label");
+          titleLabel.textContent = "Section Title";
+          const titleInput = document.createElement("input");
+          titleInput.type = "text";
+          titleInput.value = domain.title || "";
+          titleInput.dataset.domainField = "title";
+          titleInput.dataset.domainIndex = String(index);
+          titleLabel.appendChild(titleInput);
+
+          const subtitleLabel = document.createElement("label");
+          subtitleLabel.textContent = "Section Subtitle";
+          const subtitleInput = document.createElement("input");
+          subtitleInput.type = "text";
+          subtitleInput.value = domain.subtitle || "";
+          subtitleInput.dataset.domainField = "subtitle";
+          subtitleInput.dataset.domainIndex = String(index);
+          subtitleLabel.appendChild(subtitleInput);
+
+          const contentLabel = document.createElement("label");
+          contentLabel.textContent = "Section Content";
+          const contentArea = document.createElement("textarea");
+          contentArea.spellcheck = false;
+          contentArea.value = domain.content || "";
+          contentArea.dataset.domainField = "content";
+          contentArea.dataset.domainIndex = String(index);
+          contentLabel.appendChild(contentArea);
+
+          wrapper.appendChild(titleLabel);
+          wrapper.appendChild(subtitleLabel);
+          wrapper.appendChild(contentLabel);
+          domainResultsEditor.appendChild(wrapper);
+        });
+      };
+
+      const renderTextFields = (data) => {
+        renderLogo(data);
+        document.querySelector("[data-field='projectName']").textContent =
+          data.branding.projectName || `Project ${projectSlug}`;
+        document.querySelector("[data-field='projectDomain']").textContent = `Domain: ${
+          data.branding.projectDomain || data.branding.siteUrl || "Not set"
+        }`;
+        document.querySelector("[data-field='reportDate']").textContent = `Report date: ${
+          data.branding.reportDate || data.branding.reportMonth || "Not set"
+        }`;
+        document.querySelector("[data-field='reportTitle']").textContent = data.branding.reportTitle;
+        document.querySelector("[data-field='project']").textContent =
+          data.branding.project || `Project: ${projectSlug}`;
+        document.querySelector("[data-field='preparedBy']").textContent = data.branding.preparedBy;
+        document.querySelector("[data-field='reportingWindow']").textContent = data.branding.reportingWindow;
+        document.querySelector("[data-field='nextReview']").textContent = data.branding.nextReview;
+        document.querySelector("[data-field='siteUrl']").textContent = `Site URL: ${data.branding.siteUrl}`;
+        document.querySelector("[data-field='primaryContact']").textContent = data.branding.primaryContact;
+        document.querySelector("[data-field='accountManager']").textContent = data.branding.accountManager;
+        document.querySelector("[data-field='reportStatus']").textContent = `Report Status: ${
+          data.branding.reportStatus
+        }`;
+        document.querySelector("[data-field='snapshotNote']").textContent = data.snapshot.note;
+        document.querySelector("[data-field='snapshotHighlight']").textContent = data.snapshot.highlight;
+        document.querySelector("[data-field='overviewSummary']").textContent = data.overview.summary;
+        document.querySelector("[data-field='scorecardNote']").textContent = data.scorecardNote ||
+          "Each audit domain is scored 1–10";
+        document.querySelector("[data-field='domainNote']").textContent = data.domainNote ||
+          "PASS / FAIL / WARN / INFO findings";
+        document.querySelector("[data-field='approvalStatus']").textContent = data.approval.status;
+        document.querySelector("[data-field='approvalBy']").textContent = data.approval.by;
+        document.querySelector("[data-field='footerNote']").textContent = data.footerNote;
+      };
+
+      const renderReport = (data) => {
+        updateHeroTitle(data);
+        renderTextFields(data);
+        renderMetrics(data);
+        renderOverview(data);
+        renderScorecard(data);
+        renderDomainResults(data);
+        renderNextSteps(data);
+        renderApprovalTimeline(data);
+        renderSectionVisibility(data);
+      };
+
+      const applyData = (data) => {
+        if (!data.branding.project) {
+          data.branding.project = `Project: ${projectSlug}`;
+        }
+        if (!data.branding.projectName) {
+          data.branding.projectName = data.branding.clientName || `Project ${projectSlug}`;
+        }
+        if (!data.branding.projectDomain) {
+          data.branding.projectDomain = (data.branding.siteUrl || "").replace(/^https?:\/\//, "");
+        }
+        if (!data.branding.reportDate) {
+          data.branding.reportDate = data.branding.reportMonth || "";
+        }
+        if (!data.branding.logoUrl) {
+          data.branding.logoUrl = "";
+        }
+        if (!data.sections) {
+          data.sections = JSON.parse(JSON.stringify(defaultReportData.sections));
+        }
+        ensureDomainResults(data);
+        renderReport(data);
+        syncQuickFields(data);
+        jsonEditor.value = JSON.stringify(data, null, 2);
+        renderDomainResultsEditor(data);
+      };
+
+      const handleQuickFieldChange = (data) => {
+        setValue(data, fieldMap.projectName, quickFields.projectName.value);
+        setValue(data, fieldMap.projectDomain, quickFields.projectDomain.value);
+        setValue(data, fieldMap.reportDate, quickFields.reportDate.value);
+        setValue(data, fieldMap.clientName, quickFields.clientName.value);
+        setValue(data, fieldMap.reportTitle, quickFields.reportTitle.value);
+        setValue(data, fieldMap.reportMonth, quickFields.reportMonth.value);
+        setValue(data, fieldMap.reportStatus, quickFields.reportStatus.value);
+        setValue(data, fieldMap.reportingWindow, quickFields.reportingWindow.value);
+        setValue(data, fieldMap.nextReview, quickFields.nextReview.value);
+        setValue(data, fieldMap.siteUrl, quickFields.siteUrl.value);
+        setValue(data, fieldMap.primaryContact, quickFields.primaryContact.value);
+        setValue(data, fieldMap.accountManager, quickFields.accountManager.value);
+        applyData(data);
+      };
+
+      let reportData = loadData();
+
+      applyData(reportData);
+
+      Object.values(quickFields).forEach((field) => {
+        field.addEventListener("input", () => handleQuickFieldChange(reportData));
+      });
+
+      Object.entries(sectionToggles).forEach(([key, toggle]) => {
+        if (!toggle) return;
+        toggle.addEventListener("change", () => {
+          reportData.sections = reportData.sections || {};
+          reportData.sections[key] = toggle.checked;
+          applyData(reportData);
+        });
+      });
+
+      if (domainResultsEditor) {
+        domainResultsEditor.addEventListener("input", (event) => {
+          const target = event.target;
+          if (!target || !target.dataset) return;
+          const index = Number(target.dataset.domainIndex);
+          const field = target.dataset.domainField;
+          if (Number.isNaN(index) || !field) return;
+          ensureDomainResults(reportData);
+          reportData.domainResults[index][field] = target.value;
+          renderDomainResults(reportData);
+          jsonEditor.value = JSON.stringify(reportData, null, 2);
+        });
+      }
+
+      if (logoUploadInput) {
+        logoUploadInput.addEventListener("change", (event) => {
+          const file = event.target.files && event.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = () => {
+            reportData.branding.logoUrl = reader.result;
+            applyData(reportData);
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      if (removeLogoButton) {
+        removeLogoButton.addEventListener("click", () => {
+          reportData.branding.logoUrl = "";
+          applyData(reportData);
+        });
+      }
+
+      resetButton.addEventListener("click", () => {
+        reportData = JSON.parse(JSON.stringify(defaultReportData));
+        applyData(reportData);
+      });
+
+      saveButton.addEventListener("click", () => {
+        try {
+          const parsed = JSON.parse(jsonEditor.value);
+          reportData = parsed;
+          applyData(reportData);
+          localStorage.setItem(storageKey, JSON.stringify(reportData));
+          alert("Report data saved to this browser.");
+        } catch (error) {
+          alert("Invalid JSON. Please correct and try again.");
+        }
+      });
+
+      const isAllowedAdmin = (user) =>
+        user && user.email && allowedAdmins.includes(user.email.toLowerCase());
+
+      const setPanelState = (state) => {
+        qaPanelBody.disabled = state !== "ready";
+        if (state === "ready") {
+          qaAuth.classList.remove("visible");
+        } else {
+          qaAuth.classList.add("visible");
+        }
+      };
+
+      const setAuthMessage = (message) => {
+        qaAuthMessage.textContent = message;
+      };
+
+      const setAdminUser = (user) => {
+        if (user && isAllowedAdmin(user)) {
+          setPanelState("ready");
+          return;
+        }
+        if (user && !isAllowedAdmin(user)) {
+          setPanelState("blocked");
+          setAuthMessage("Access denied. Please log in with an authorized account.");
+          if (window.netlifyIdentity) {
+            netlifyIdentity.logout();
+          }
+          return;
+        }
+        setPanelState("logged-out");
+        setAuthMessage("Login required to edit report data.");
+      };
+
+      const adminIntent = searchParams.get("admin") === "1";
+      if (isRootAccess && !adminIntent) {
+        if (restrictedMessage) {
+          restrictedMessage.classList.remove("hidden");
+        }
+        if (page) {
+          page.classList.add("is-restricted");
+        }
+      }
+      if (adminIntent) {
+        qaPanel.classList.remove("is-hidden");
+        if (window.netlifyIdentity) {
+          netlifyIdentity.on("init", (user) => setAdminUser(user));
+          netlifyIdentity.on("login", (user) => {
+            setAdminUser(user);
+            netlifyIdentity.close();
+          });
+          netlifyIdentity.on("logout", () => setAdminUser(null));
+          netlifyIdentity.init();
+        } else {
+          setPanelState("blocked");
+          setAuthMessage("Identity widget unavailable. Please reload this page.");
+        }
+      }
+
+      if (qaLoginButton) {
+        qaLoginButton.addEventListener("click", () => {
+          if (window.netlifyIdentity) {
+            netlifyIdentity.open("login");
+          }
+        });
+      }
+
+      if (qaLogoutButton) {
+        qaLogoutButton.addEventListener("click", () => {
+          if (window.netlifyIdentity) {
+            netlifyIdentity.logout();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
